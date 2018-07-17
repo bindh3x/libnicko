@@ -96,7 +96,7 @@ fi
 ### Contributing
 
 Contributions are welcome any time!
-Especially for adding new files to nikko(1)). :smile:
+Especially for adding new files to nikko(1). :smile:
 
 ### Credits
 
