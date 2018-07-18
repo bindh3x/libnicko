@@ -60,6 +60,22 @@ static struct nicko_magic list[] = {
     0
   },
   {
+    NICKO_TYPE_DEVICE_CHAR,
+    NICKO_GROUP_SYSTEM,
+    "device/character",
+    {0},
+    0,
+    0
+  },
+  {
+    NICKO_TYPE_DEVICE_BLOCK,
+    NICKO_GROUP_SYSTEM,
+    "device/block",
+    {0},
+    0,
+    0
+  },
+  {
     NICKO_TYPE_ZIP,
     NICKO_GROUP_ARCHIVE,
     "zip",
@@ -381,6 +397,10 @@ _nicko_stat(const char *filename, size_t *size)
   *size = st.st_size;
 
   switch (st.st_mode & S_IFMT) {
+    case S_IFCHR:
+      return NICKO_TYPE_DEVICE_CHAR;
+    case S_IFBLK:
+      return NICKO_TYPE_DEVICE_BLOCK;
     case S_IFDIR:
       return NICKO_TYPE_DIR;
     case S_IFLNK:
@@ -396,7 +416,7 @@ _nicko_stat(const char *filename, size_t *size)
 struct nicko_magic *
 nicko(const char *filename)
 {
-  int i = 4, fd = -1, st = 0;
+  int i = 7, fd = -1, st = 0;
   size_t size = 0;
   uint8_t magic[NICKO_MAGIC_MAX];
 
