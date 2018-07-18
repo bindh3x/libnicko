@@ -20,6 +20,7 @@ nicko: lib cli.o
 install: all
 	install -d $(PREFIX)/lib
 	install -m 0644 libnicko.a $(PREFIX)/lib
+	install -d $(PREFIX)/include
 	install -m 0644 nicko.h $(PREFIX)/include/nicko.h
 	install -d $(PREFIX)/bin
 	install -m755 nicko $(PREFIX)/bin/nicko
