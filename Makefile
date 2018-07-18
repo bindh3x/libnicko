@@ -22,7 +22,7 @@ install: all
 	install -m 0644 libnicko.a $(PREFIX)/lib
 	install -m 0644 nicko.h $(PREFIX)/include/nicko.h
 	mkdir -p $(PREFIX)/bin
-	install -Dm755 nicko $(PREFIX)/bin/nicko
+	install -m755 nicko $(PREFIX)/bin/nicko
 	mkdir -p $(PREFIX)/share/man1
 	gzip -c < nicko.1 > $(PREFIX)/share/man1/nicko.1.gz
 
