@@ -74,7 +74,7 @@ static void nicko_usage(const char *filename)
   fprintf(stdout,
 	  "Usage: %s [OPTIONS] FILE ...\n"
 	  "\nOptions:\n"
-	  "  -n  --name        Print file name as well.\n"
+	  "  -n --name         Print file name as well.\n"
 	  "  -t --type         Show only file type without file name.\n"
 	  "  -q --quiet        Do not display output.\n"
 	  "  -g --group        Print group instead of type.\n"
