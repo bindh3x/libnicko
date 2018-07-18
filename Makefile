@@ -18,13 +18,14 @@ nicko: lib cli.o
 	$(CC) $(CFLAGS) -o $@ cli.o libnicko.a
 
 install: all
-	mkdir -p $(PREFIX)/lib
+	install -d $(PREFIX)/lib
 	install -m 0644 libnicko.a $(PREFIX)/lib
+	install -d $(PREFIX)/include
 	install -m 0644 nicko.h $(PREFIX)/include/nicko.h
-	mkdir -p $(PREFIX)/bin
-	install -Dm755 nicko $(PREFIX)/bin/nicko
-	mkdir -p $(PREFIX)/share/man1
-	gzip -c < nicko.1 > $(PREFIX)/share/man1/nicko.1.gz
+	install -d $(PREFIX)/bin
+	install -m755 nicko $(PREFIX)/bin/nicko
+	install -d $(PREFIX)/share/man1
+	umask 022 && gzip -c < nicko.1 > $(PREFIX)/share/man1/nicko.1.gz
 
 uninstall:
 	rm -f $(PREFIX)/lib/libnicko.a
