@@ -427,6 +427,10 @@ nicko(const char *filename)
     return NULL;
   }
 
+  /* Let's move this to _nicko_read at some point. */
+  if ((size_t)list[i].offset > size || list[i].size > size)
+    goto end;
+
   /**
    * Read magic early so we can compare the first byte of the
    * magic.
