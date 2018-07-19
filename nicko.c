@@ -429,12 +429,13 @@ _nicko_stat(const char *filename, size_t *size)
 struct nicko_magic *
 nicko(const char *filename)
 {
-  int i = 8, fd = -1, st = 0;
+  int i = 8, fd = -1, st = 0, match = 0;
   size_t size = 0;
   uint8_t magic[NICKO_MAGIC_MAX];
 
-  if ((st = _nicko_stat(filename, &size)) > 0)
+  if ((st = _nicko_stat(filename, &size)) > 0) {
     return &list[st - 1];
+  }
 
   if ((fd = open(filename, O_RDONLY|O_NONBLOCK)) < 0) {
     return NULL;
@@ -468,6 +469,7 @@ nicko(const char *filename)
       goto end;
 
     if (_nicko_equal(magic, list[i].magic, list[i].size) == 0) {
+      match = 1;
       break;
     }
   }
@@ -476,5 +478,7 @@ end:
   if (close(fd) < 0)
     return NULL;
 
+  if (match == 0)
+    return NULL;
   return &list[i];
 }

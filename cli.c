@@ -49,6 +49,8 @@ static void error(const char *format, ...)
 {
   va_list ap;
 
+  if (errno == 0)
+    return;
   fprintf(stderr, "error: ");
   va_start(ap, format);
   vfprintf(stderr, format, ap);
