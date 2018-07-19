@@ -432,7 +432,7 @@ nicko(const char *filename)
    * magic.
    */
   if (_nicko_read(fd, magic, &list[i]) < 0)
-    return NULL;
+    goto end;
 
   for (;list[i].name;i++) {
     if ((size_t)list[i].offset > size || list[i].size > size)
@@ -448,13 +448,14 @@ nicko(const char *filename)
 	continue;
 
     if (_nicko_read(fd, magic, &list[i]) < 0)
-      return NULL;
+      goto end;
 
     if (_nicko_equal(magic, list[i].magic, list[i].size) == 0) {
       break;
     }
   }
 
+end:
   if (close(fd) < 0)
     return NULL;
 
