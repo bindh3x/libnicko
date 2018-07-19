@@ -403,9 +403,6 @@ _nicko_stat(const char *filename, size_t *size)
   if (stat(filename, &st) < 0)
     return -1;
 
-  if (st.st_size == 0)
-    return NICKO_TYPE_EMPTY;
-
   *size = st.st_size;
 
   switch (st.st_mode & S_IFMT) {
@@ -422,6 +419,10 @@ _nicko_stat(const char *filename, size_t *size)
     case S_IFIFO:
       return NICKO_TYPE_PIPE;
   }
+
+  if (st.st_size == 0)
+    return NICKO_TYPE_EMPTY;
+
   return 0;
 }
 
