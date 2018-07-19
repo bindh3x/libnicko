@@ -24,8 +24,8 @@ install: all
 	install -m 0644 nicko.h $(PREFIX)/include/nicko.h
 	install -d $(PREFIX)/bin
 	install -m755 nicko $(PREFIX)/bin/nicko
-	install -d $(PREFIX)/share/man1
-	umask 022 && gzip -c < nicko.1 > $(PREFIX)/share/man1/nicko.1.gz
+	install -d $(PREFIX)/share/man/man1/
+	umask 022 && gzip -c < nicko.1 > $(PREFIX)/share/man/man1/nicko.1.gz
 
 uninstall:
 	rm -f $(PREFIX)/lib/libnicko.a
