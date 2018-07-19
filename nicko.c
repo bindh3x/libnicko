@@ -76,6 +76,14 @@ static struct nicko_magic list[] = {
     0
   },
   {
+    NICKO_TYPE_EMPTY,
+    NICKO_GROUP_SYSTEM,
+    "empty",
+    {0},
+    0,
+    0
+  },
+  {
     NICKO_TYPE_ZIP,
     NICKO_GROUP_ARCHIVE,
     "zip",
@@ -394,6 +402,10 @@ _nicko_stat(const char *filename, size_t *size)
 
   if (stat(filename, &st) < 0)
     return -1;
+
+  if (st.st_size == 0)
+    return NICKO_TYPE_EMPTY;
+
   *size = st.st_size;
 
   switch (st.st_mode & S_IFMT) {
@@ -416,7 +428,7 @@ _nicko_stat(const char *filename, size_t *size)
 struct nicko_magic *
 nicko(const char *filename)
 {
-  int i = 7, fd = -1, st = 0;
+  int i = 8, fd = -1, st = 0;
   size_t size = 0;
   uint8_t magic[NICKO_MAGIC_MAX];
 
