@@ -1,13 +1,7 @@
 ### Nicko
 
-A simple command line tool and library to identify
-popular file types as fast as possible.
-
-### Why?
-
-I needed to run `file(1)` on a large group of files within a
-script, but it was too slow. `nicko(1)` solves this and only
-tries to identify files by their magic as fast as possible.
+A simple command line tool and portable library to identify
+popular file types.
 
 ### Installation
 
