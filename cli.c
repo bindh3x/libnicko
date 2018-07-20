@@ -117,7 +117,6 @@ end:
 
 int main(int argc, char **argv)
 {
-  char **file = NULL;
   int ret = 0, opt = 0, opt_index = 0;
   static struct option long_options[] = {
     {"name",      no_argument, 0, 'n'},
@@ -165,10 +164,8 @@ int main(int argc, char **argv)
   else if (flag == 0)
     flag |= NICKO_FLAG_FILENAME | NICKO_FLAG_TYPE;
 
-  file = argv;
-  while (*++file)
-    if (**file != 0x2d)
-      ret = nicko_run(*file);
+  for (; optind < argc; optind++)
+    ret = nicko_run(argv[optind]);
 
   return ret;
 }
