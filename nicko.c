@@ -207,7 +207,7 @@ static struct nicko_magic list[] = {
     NICKO_TYPE_MACH_O,
     NICKO_GROUP_BIN,
     "mach-o",
-    {0xFE, 0xED, 0xFA, 0xCE},
+    {0xCE, 0xFA, 0xED, 0xFE},
     4,
     0
   }, /* Mach-O 32-bit */
@@ -215,7 +215,7 @@ static struct nicko_magic list[] = {
     NICKO_TYPE_MACH_O,
     NICKO_GROUP_BIN,
     "mach-o",
-    {0xFE, 0xED, 0xFA, 0xCF},
+    {0xCF, 0xFA, 0xED, 0xFE},
     4,
     0
   }, /* Mach-O 64-bit */
