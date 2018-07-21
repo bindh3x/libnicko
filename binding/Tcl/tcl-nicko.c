@@ -36,8 +36,13 @@ static int Nicko_Cmd(ClientData cdata,
   }
   name = Tcl_GetStringFromObj(objv[1], &len);
 
-  if ((m = nicko(name)) == NULL) {
-    Tcl_SetResult(interp, "nicko: magic not found", NULL);
+  if (nicko(name, &m) < 0) {
+    Tcl_SetResult(interp, (char *)Tcl_PosixError(interp), NULL);
+    return TCL_ERROR;
+  }
+
+  if (m == NULL) {
+    Tcl_SetResult(interp, "nicko: no match found", NULL);
     return TCL_ERROR;
   }
 
