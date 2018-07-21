@@ -164,7 +164,7 @@ int main(int argc, char **argv)
   else if (flag == 0)
     flag |= NICKO_FLAG_FILENAME | NICKO_FLAG_TYPE;
 
-  for (; optind < argc; optind++)
+  for (;optind < argc;optind++)
     ret = nicko_run(argv[optind]);
 
   return ret;
