@@ -465,8 +465,10 @@ int nicko(const char *filename, struct nicko_magic **p)
       if (*magic != *list[i].magic)
 	continue;
 
-    if (_nicko_read(fd, magic, &list[i], size) < 0)
+    if ((st = _nicko_read(fd, magic, &list[i], size)) == -1)
       goto end;
+    else if (st == -2)
+      continue;
 
     if (_nicko_equal(magic, list[i].magic, list[i].size) == 0) {
       match = 1;
