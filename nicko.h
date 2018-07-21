@@ -85,12 +85,12 @@ struct nicko_magic {
 };
 
 /**
- * Execute nicko on a file, and return magic if found.
+ * Run nicko on a file.
  *
  * @param filename: file name.
- * @return index to the magic, -1 on error.
+ * @return 0 on success, -1 on error.
  */
-struct nicko_magic *nicko(const char *filename);
+int nicko(const char *filename, struct nicko_magic **p);
 
 #endif /* LIBNICKO_H */
 

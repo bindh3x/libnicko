@@ -373,8 +373,14 @@ static int pread(int fd, void *buf, size_t nbyte, off_t offset)
 **/
 
 static int
-_nicko_read(int fd, uint8_t *magic, struct nicko_magic *m)
+_nicko_read(int fd,
+	    uint8_t *magic,
+	    struct nicko_magic *m,
+	    size_t size)
 {
+  if ((size_t)m->offset > size || m->size > size)
+    return -2;
+
   (void)memset(magic, 0, NICKO_MAGIC_MAX);
 
   if (pread(fd, magic, m->size, m->offset) != (ssize_t)m->size)
@@ -426,35 +432,29 @@ _nicko_stat(const char *filename, size_t *size)
   return 0;
 }
 
-struct nicko_magic *
-nicko(const char *filename)
+int nicko(const char *filename, struct nicko_magic **p)
 {
   int i = 8, fd = -1, st = 0, match = 0;
   size_t size = 0;
   uint8_t magic[NICKO_MAGIC_MAX];
 
   if ((st = _nicko_stat(filename, &size)) > 0) {
-    return &list[st - 1];
+    *p = &list[st - 1];
+    return 0;
   }
 
   if ((fd = open(filename, O_RDONLY|O_NONBLOCK)) < 0) {
-    return NULL;
+    return -1;
   }
-
-  /* Let's move this to _nicko_read at some point. */
-  if ((size_t)list[i].offset > size || list[i].size > size)
-    goto end;
 
   /**
    * Read magic early so we can compare the first byte of the
    * magic.
    */
-  if (_nicko_read(fd, magic, &list[i]) < 0)
+  if (_nicko_read(fd, magic, &list[i], size) < 0)
     goto end;
 
   for (;list[i].name;i++) {
-    if ((size_t)list[i].offset > size || list[i].size > size)
-      continue;
 
     /**
      * Instead of wasting time, compare only magics that starts with
@@ -465,7 +465,7 @@ nicko(const char *filename)
       if (*magic != *list[i].magic)
 	continue;
 
-    if (_nicko_read(fd, magic, &list[i]) < 0)
+    if (_nicko_read(fd, magic, &list[i], size) < 0)
       goto end;
 
     if (_nicko_equal(magic, list[i].magic, list[i].size) == 0) {
@@ -476,9 +476,11 @@ nicko(const char *filename)
 
 end:
   if (close(fd) < 0)
-    return NULL;
+    return -1;
 
   if (match == 0)
-    return NULL;
-  return &list[i];
+    return 0;
+
+  *p = &list[i];
+  return 0;
 }
