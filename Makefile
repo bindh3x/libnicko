@@ -30,7 +30,7 @@ install: all
 uninstall:
 	rm -f $(PREFIX)/lib/libnicko.a
 	rm -f $(PREFIX)/include/nicko.h
-	rm -f $(PREFIX)/bin/nicko $(PREFIX)/share/man1/nicko.1.gz
+	rm -f $(PREFIX)/bin/nicko $(PREFIX)/share/man/man1/nicko.1.gz
 
 clean:
 	rm -f *.o libnicko.a nicko
