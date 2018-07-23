@@ -24,7 +24,8 @@ if {$::argc < 1} {
 
 foreach arg $::argv {
   try {
-    puts "$arg: [lindex [nicko $arg] 0]"
+    puts "$arg: [dict get [nicko $arg] name]"
+    puts "$arg: [dict get [nicko $arg] group]"
   } on error {msg opts} {
     puts $msg
   }

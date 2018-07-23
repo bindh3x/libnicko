@@ -21,14 +21,14 @@
 #include <nicko.h>
 
 static int Nicko_Cmd(ClientData cdata,
-		    Tcl_Interp *interp,
-		    int objc,
-		    Tcl_Obj * const objv[])
+		     Tcl_Interp *interp,
+		     int objc,
+		     Tcl_Obj * const objv[])
 {
   struct nicko_magic *m = NULL;
   const char *name = NULL;
   int len = 0;
-  Tcl_Obj *list[2];
+  Tcl_Obj *dict = NULL;
 
   if (objc != 2) {
     Tcl_WrongNumArgs(interp, 0, objv, "nicko filename");
@@ -46,10 +46,26 @@ static int Nicko_Cmd(ClientData cdata,
     return TCL_ERROR;
   }
 
-  list[0] = Tcl_NewStringObj(m->name, strlen(m->name));
-  list[1] = Tcl_NewStringObj((const char *)m->magic, sizeof(m->magic));
-
-  Tcl_SetObjResult(interp, Tcl_NewListObj(2, list));
+  dict = Tcl_NewDictObj();
+  Tcl_DictObjPut(interp,
+		 dict,
+	         Tcl_NewStringObj("name", 4),
+		 Tcl_NewStringObj(m->name,
+                                  strlen(m->name)));
+  Tcl_DictObjPut(interp,
+		 dict,
+	         Tcl_NewStringObj("group", 5),
+		 Tcl_NewStringObj(nicko_get_group_name(m->group),
+			          strlen(nicko_get_group_name(m->group))));
+  Tcl_DictObjPut(interp,
+		 dict,
+	         Tcl_NewStringObj("size", 4),
+		 Tcl_NewIntObj(m->size));
+  Tcl_DictObjPut(interp,
+		 dict,
+	         Tcl_NewStringObj("offset", 6),
+		 Tcl_NewIntObj(m->offset));
+  Tcl_SetObjResult(interp, dict);
 
   return TCL_OK;
 }
