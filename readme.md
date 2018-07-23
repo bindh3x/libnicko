@@ -25,7 +25,7 @@ There is only 1 function to worry about:
 
 ```c
 
-struct nicko_magic *nicko(const char *filename);
+int nicko(const char *filename, struct nicko_magic **p);
 
 ```
 
@@ -88,8 +88,7 @@ fi
 
 ### Contributing
 
-Contributions are welcome any time!
-Especially for adding new files to nicko(1). :smile:
+Contributions are welcome!
 
 ### Credits
 
