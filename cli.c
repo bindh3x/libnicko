@@ -33,18 +33,6 @@ static int flag;
 #define NICKO_FLAG_GROUP    (1 << 2)
 #define NICKO_FLAG_FILENAME (1 << 3)
 
-static const char *nicko_groups[] = {
-  [NICKO_GROUP_SYSTEM]   = "system",
-  [NICKO_GROUP_BIN]      = "binary",
-  [NICKO_GROUP_ARCHIVE]  = "archive",
-  [NICKO_GROUP_AUDIO]    = "audio",
-  [NICKO_GROUP_DOCUMENT] = "document",
-  [NICKO_GROUP_PM]       = "package manager file",
-  [NICKO_GROUP_PICTURE]   = "picture",
-  [NICKO_GROUP_VIDEO]    = "video",
-  [NICKO_GROUP_UNSPECIFIED] = "unspecified"
-};
-
 static void error(const char *format, ...)
 {
   va_list ap;
@@ -105,13 +93,12 @@ static int nicko_run(const char *filename)
     printf("%s: ", filename);
 
   if (flag & NICKO_FLAG_QUIET)
-    goto end;
+    return m->type;
   else if (flag & NICKO_FLAG_TYPE)
     printf("%s\n", m->name);
   else if (flag & NICKO_FLAG_GROUP)
-    printf("%s\n", nicko_groups[m->group]);
+    printf("%s\n", nicko_get_group_name(m->group));
 
-end:
   return m->type;
 }
 

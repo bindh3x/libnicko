@@ -26,6 +26,19 @@
 
 #include "nicko.h"
 
+static const char *nicko_groups[] = {
+  [NICKO_GROUP_SYSTEM]   = "system",
+  [NICKO_GROUP_BIN]      = "binary",
+  [NICKO_GROUP_ARCHIVE]  = "archive",
+  [NICKO_GROUP_AUDIO]    = "audio",
+  [NICKO_GROUP_DOCUMENT] = "document",
+  [NICKO_GROUP_PM]       = "package manager file",
+  [NICKO_GROUP_PICTURE]   = "picture",
+  [NICKO_GROUP_VIDEO]    = "video",
+  [NICKO_GROUP_UNSPECIFIED] = "unspecified"
+
+};
+
 static struct nicko_magic list[] = {
   {
     NICKO_TYPE_DIR,
@@ -430,6 +443,11 @@ _nicko_stat(const char *filename, size_t *size)
     return NICKO_TYPE_EMPTY;
 
   return 0;
+}
+
+const char *nicko_get_group_name(int group)
+{
+  return nicko_groups[group];
 }
 
 int nicko(const char *filename, struct nicko_magic **p)

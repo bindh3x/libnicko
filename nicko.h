@@ -92,6 +92,14 @@ struct nicko_magic {
  */
 int nicko(const char *filename, struct nicko_magic **p);
 
+/**
+ * Get group name by group ID.
+ *
+ * @param group: group ID.
+ * @return printable name of the group.
+ */
+const char *nicko_get_group_name(int group);
+
 #endif /* LIBNICKO_H */
 
 
