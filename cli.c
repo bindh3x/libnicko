@@ -81,13 +81,10 @@ static int nicko_run(const char *filename)
 {
   struct nicko_magic *m = NULL;
 
-  if ((nicko(filename, &m)) < 0) {
+  if ((nicko(filename, &m)) != 0) {
     error("%s - %s", filename, strerror(errno));
     return 1;
   }
-
-  if (m == NULL)
-    return 1;
 
   if (flag & NICKO_FLAG_FILENAME)
     printf("%s: ", filename);

@@ -499,8 +499,9 @@ end:
     return -1;
 
   if (match == 0)
-    return 0;
+    return 1;
 
   *p = &list[i];
+
   return 0;
 }

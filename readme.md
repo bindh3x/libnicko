@@ -40,7 +40,7 @@ int main(void)
 {
   struct nicko_magic *m = NULL;
 
-  if (nicko("/usr/bin/pwd", &m) < 0)
+  if (nicko("/usr/bin/pwd", &m) != 0)
     return 0;
 
   puts(m->name);
